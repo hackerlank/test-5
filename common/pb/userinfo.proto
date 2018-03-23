@@ -1,0 +1,189 @@
+syntax = "proto3";
+
+package userinfo;
+ //用户基本信息
+message Userinfo
+{
+	uint32 uid = 1;//用户id
+	bytes uname = 2; //用户名
+	uint32 coinnum = 3;//金币
+	uint32 integral = 4;//积分
+	uint32 ingotnum = 5;//元宝
+	uint32 gender = 6;//性别,0:未知,1:男;2:女;
+	bytes headurl = 7;//头像地址
+	uint32 nowtime = 8;//服务器时间
+}
+//牌
+message Card
+{
+	uint32 value = 1;//牌的数值
+}
+ //桌上用户基本信息
+message DeskUserinfo
+{
+	uint32 uid = 1;//用户id
+	bytes uname = 2; //用户名
+	uint32 coinnum = 3;//金币 积分
+	bytes headurl = 4;//头像地址
+	uint32 deskid = 5;//桌子id
+	uint32 pos = 6;//座位位置0-9
+	uint32 status = 7;//状态 开始叫地主前有用0: 1: 还没有点继续2: 用户点了继续了
+	uint32 offline = 8;//在线状态 1在线，2离线
+	uint32 ifauto = 9;//托管，0:不托管，1:第一次超时，2:被动托管10:主动托管
+	uint32 ifdouble = 10;//是否加倍 0 不加倍         >=1 加倍
+	uint32 ifshowcard = 11;//是否明牌开始 0 不明牌 >=1 明牌
+	repeated Card poker = 12;//牌列表
+	uint32 gender = 13;//性别,0:未知,1:男;2:女;
+	uint32 integral = 14;//游戏积分
+	int32 gamevalue = 15;//比赛积分
+	uint32 pokerlen = 16;//剩下的牌数量
+}
+ //斗地主桌上基本信息
+message DdzDeskinfo
+{
+	uint32 deskid = 1;//桌子id
+	uint32 status = 2; //0\1\2:空闲
+	uint32 curpos = 3;//当前谁出牌
+	uint32 point = 4;//本局倍数
+	uint32 bombnum = 5;//炸弹个数
+	repeated Card lastpoker = 6;//上一次出的牌
+	repeated Card putpoker = 7;//已经出的牌
+	repeated DeskUserinfo userlist = 8;//用户列表
+	repeated Card pubpoker = 9;//三张公共的牌
+	uint32 matchid = 10;//比赛id
+}
+//斗地主结束信息
+message DdzDeskResultinfo
+{
+	uint32 status = 1;//结束方式：0、1 0：表示黄了，1：表示正常结束
+	uint32 point = 2;//本局倍数
+	uint32 bombnum = 3;//炸弹个数
+	uint32 ifspring = 4;//是否春天 0：否，1：是
+	repeated DdzUserResultinfo userlist = 5;
+}
+//斗地主用户结束信息
+message DdzUserResultinfo
+{
+	uint32 uid = 1;//用户id
+	uint32 pos = 2;//位置
+	uint32 point = 3;//本局倍数
+	uint32 result = 4;//1：赢；2：输
+	uint32 value = 5;//输赢数值
+	uint32 coin = 6;//输赢金豆
+	int32 gamevalue = 7;//比赛积分
+	uint32 rank = 8;//排名
+	uint32 leftvalue = 9;//剩余金额数值
+}
+ //斗地主当前比赛基本信息
+message DdzMatchInfo
+{
+	uint32 matchid = 1;//比赛id
+	uint32 trunindex = 2; //第几轮
+	uint32 curnum = 3;//当前报名人数
+	int32 gamevalue = 4;//自己比赛积分
+	int32 ifmatch = 5;//是否已经报名 1 已经报名 2 比赛中
+}
+//斗地主当前自己房间信息
+message DdzSelfRoomInfo
+{
+	uint32 roomid = 1;//房间id 
+	bytes roomcode = 2;//房间码
+	uint32 endtime = 3;//结束时间
+	uint32 createuid = 4;//房主id
+	uint32 basecoin = 5;//底分
+	uint32 basetimes = 6;//倍数
+}
+//牛牛桌上用户基本信息
+message DeskNnUserinfo
+{
+	uint32 uid = 1;//用户id
+	bytes uname = 2; //用户名
+	uint32 coinnum = 3;//金币 积分
+	bytes headurl = 4;//头像地址
+	uint32 deskid = 5;//桌子id
+	uint32 pos = 6;//座位位置0-5
+	uint32 status = 7;//状态 0: 1: 还没有点继续2: 用户点了继续
+	uint32 offline = 8;//在线状态 1在线，2离线
+	repeated Card poker = 9;//牌列表
+	uint32 gender = 10;//性别,0:未知,1:男;2:女;
+	uint32 integral = 11;//积分
+	uint32 gamevalue = 12;//比赛积分
+	uint32 times = 13;//倍数
+	uint32 betnum = 14;//下注金额
+}
+//牛牛桌上基本信息
+message NnDeskinfo
+{
+	uint32 deskid = 1;//桌子id
+	uint32 status = 2; //0:准备期间 1: 等待最低人数…
+	uint32 hostpos = 3;//庄的位置
+	uint32 times = 4;//抢庄倍数
+	repeated DeskNnUserinfo userlist = 5;//用户列表
+	uint32 matchid = 6;//比赛id
+}
+//用户牌列表
+message NnUserPokerList
+{
+	repeated NnUserPoker userlist = 1;//用户牌列表
+}
+//牛牛用户牌列表信息
+message NnUserPoker
+{
+	uint32 userpos = 1;//用户的位置
+	repeated Card pokerlist = 2;//牌列表
+}
+//牛牛结束信息
+message NNDeskResultinfo
+{
+	uint32 status = 1;//结束方式：0、1  0：表示黄了，1：表示正常结束
+	uint32 times = 2;//本局倍数
+	repeated NNUserResultinfo userlist = 5;
+}
+//牛牛用户结束信息
+message NNUserResultinfo
+{
+	uint32 uid = 1;//用户id
+	uint32 pos = 2;//位置
+	uint32 times = 3;//本局倍数
+	uint32 result = 4;//1：赢；2：输
+	uint32 value = 5;//输赢数值
+	uint32 coin = 6;//输赢金豆
+	int32 gamevalue = 7;//比赛积分
+	uint32 rank = 8;//排名
+	uint32 leftvalue = 9;//剩余金额数值
+}
+//牛牛用户下注列表
+message NnUserBetList
+{
+	repeated NnUserBet userlist = 1;//用户下注列表
+}
+//牛牛用户下注信息
+message NnUserBet
+{
+	uint32 userpos = 1;//用户的位置
+	uint32 times = 2;//下注倍数
+	uint32 betnum = 3;//下注金额
+}
+//牛牛当前比赛基本信息
+message NnMatchInfo
+{
+	uint32 matchid = 1;//比赛id
+	uint32 trunindex = 2; //第几轮
+	uint32 curnum = 3;//当前报名人数
+	int32 gamevalue = 4;//自己比赛积分
+	int32 ifmatch = 5;//是否已经报名 1 已经报名 2 比赛中
+}
+//牛牛当前自己房间信息
+message NnSelfRoomInfo
+{
+	uint32 roomid = 1;//房间id 
+	bytes roomcode = 2;//房间码
+	uint32 endtime = 3;//结束时间
+	uint32 createuid = 4;//房主id
+	uint32 basecoin = 5;//底分
+	uint32 basetimes = 6;//倍数
+	uint32 gamenum = 7;//玩家人数
+}
+
+
+

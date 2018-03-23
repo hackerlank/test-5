@@ -1,0 +1,91 @@
+syntax = "proto3";
+
+package chess;
+//象棋信息
+message ChessCard
+{
+	uint32 value = 1;//数值
+	uint32 x = 2;//x 坐标 0 - 9
+	uint32 y = 3;//y 坐标 0 - 8
+	uint32 status = 4;//状态 1 正常 2 被吃
+	uint32 pos = 5;//玩家位置
+}
+//象棋桌上用户基本信息
+message ChessDeskUserinfo
+{
+	uint32 uid = 1;//用户id
+	bytes uname = 2; //用户名
+	uint32 coinnum = 3;//金币 积分
+	bytes headurl = 4;//头像地址
+	uint32 deskid = 5;//桌子id
+	uint32 pos = 6;//座位位置0-9
+	uint32 status = 7;//状态 
+	uint32 offline = 8;//在线状态 1在线，2离线
+	uint32 gender = 10;//性别,0:未知,1:男;2:女;
+	uint32 integral = 11;//积分
+	int32 gamevalue = 12; //比赛积分
+	uint32 totalbet = 13;//下注总和
+	repeated ChessCard cardlist = 14;//象棋列表
+	uint32 usetimes = 15;//用了多少时间
+}
+//象棋桌上基本信息
+message ChessDeskinfo
+{
+	uint32 deskid = 1;//桌子id
+	uint32 status = 2; //0\1\2: ...
+	uint32 curpos = 3;//当前谁操作
+	uint32 totalbet = 4;//下注总和
+	repeated ChessDeskUserinfo userlist = 5;//用户列表
+	uint32 matchid = 6;//比赛id
+	uint32 hostpos = 7;//庄，红位置
+}
+//象棋结束信息
+message ChessDeskResultinfo
+{
+	repeated ChessUserResultinfo userlist = 1;//用户列表
+}
+//象棋用户结束信息
+message ChessUserResultinfo
+{
+	uint32 uid = 1;//用户id
+	uint32 pos = 2;//位置
+	uint32 result = 3;//1：赢；2：输
+	uint32 value = 4;//输赢数值
+	uint32 coin = 5;//输赢金豆 比赛用
+	int32 gamevalue = 6;//比赛积分
+	uint32 rank = 7;//排名
+	uint32 leftvalue = 8;//剩余金额数值
+}
+//一步象棋记录信息
+message ChessOneStepInfo
+{
+	uint32 sposx = 1;//开始x坐标点
+	uint32 sposy = 2;//开始y坐标点
+	uint32 eposx = 3;//结束x坐标点
+	uint32 eposy = 4;//结束y坐标点
+	ChessCard startchess = 5;//开始象棋信息
+	ChessCard endchess = 6;//结束象棋信息
+}
+//象棋当前比赛基本信息
+message ChessMatchInfo
+{
+	uint32 matchid = 1;//比赛id
+	uint32 trunindex = 2; //第几轮
+	uint32 curnum = 3;//当前报名人数
+	int32 gamevalue = 4;//自己比赛积分
+	int32 ifmatch = 5;//是否已经报名 1 已经报名 2 比赛中
+	uint32 leftnum = 6;//比赛剩下人数
+	uint32 begintime = 7;//开始时间
+}
+//象棋自定义房间信息
+message ChessSelfRoomInfo
+{
+	uint32 roomid = 1;//房间id 
+	bytes roomcode = 2;//房间码
+	uint32 endtime = 3;//结束时间
+	uint32 createuid = 4;//房主id
+	uint32 basecoin = 5;//底分 下注最大值
+	uint32 playcount = 6;//人数
+}
+
+

@@ -1,0 +1,107 @@
+syntax = "proto3";
+
+package texas;
+//牌
+message Card
+{
+	uint32 value = 1;//牌的数值
+}
+//德州桌上用户基本信息
+message TexasDeskUserinfo
+{
+	uint32 uid = 1;//用户id
+	bytes uname = 2; //用户名
+	uint32 coinnum = 3;//金币 积分
+	bytes headurl = 4;//头像地址
+	uint32 deskid = 5;//桌子id
+	uint32 pos = 6;//座位位置0-9
+	uint32 status = 7;//状态 
+	uint32 offline = 8;//在线状态 1在线，2离线
+	repeated Card poker = 9;//牌列表
+	uint32 gender = 10;//性别,0:未知,1:男;2:女;
+	uint32 integral = 11;//积分
+	int32 gamevalue = 12; //比赛积分
+	uint32 totalbet = 13;//下注总和
+	uint32 curbet = 14;//当前一轮下注数
+	uint32 roomcoin = 15;//房间携带的货币数量
+}
+//德州桌上基本信息
+message TexasDeskinfo
+{
+	uint32 deskid = 1;//桌子id
+	uint32 status = 2; //0\1\2:空闲 ...
+	uint32 curpos = 3;//当前谁操作
+	uint32 totalbet = 4;//下注总和
+	uint32 curbet = 5;//当前一轮下注数值
+	uint32 hostpos = 6;//庄的位置
+	repeated Card pubpoker = 7;//公牌列表
+	repeated TexasDeskUserinfo userlist = 8;//用户列表
+	uint32 matchid = 9;//比赛id
+	repeated TexasEdgePoolInfo info = 10;//边池列表
+}
+//德州边池
+message TexasEdgePool
+{
+	uint32 totalbet = 1;//下注总和
+	repeated TexasEdgePoolInfo info = 2;//边池列表
+}
+//德州边池信息
+message TexasEdgePoolInfo
+{
+	uint32 poolindex = 1;//边池顺序
+	uint32 allincoin = 2;//全下的用户金额
+	uint32 coin = 3;//边池金额
+}
+//德州用户牌列表
+message TexasUserPokerList
+{
+	repeated TexasUserPoker userlist = 1;//用户牌列表
+}
+//德州用户牌列表信息
+message TexasUserPoker
+{
+	uint32 userpos = 1;//用户的位置
+	repeated Card pokerlist = 2;//牌列表
+}
+//德州结束信息
+message TexasDeskResultinfo
+{
+	repeated Card pubpoker = 1;//公牌列表
+	repeated TexasUserResultinfo userlist = 2;//用户列表
+}
+//德州用户结束信息
+message TexasUserResultinfo
+{
+	uint32 uid = 1;//用户id
+	uint32 pos = 2;//位置
+	uint32 result = 3;//1：赢；2：输
+	uint32 value = 4;//输赢数值
+	uint32 coin = 5;//输赢金豆 比赛用
+	repeated Card usercard = 6;//用户手牌
+	int32 gamevalue = 7;//比赛积分
+	uint32 rank = 8;//排名
+	uint32 leftvalue = 9;//剩余金额数值
+}
+//德州当前比赛基本信息
+message TexasMatchInfo
+{
+	uint32 matchid = 1;//比赛id
+	uint32 trunindex = 2; //第几轮
+	uint32 curnum = 3;//当前报名人数
+	int32 gamevalue = 4;//自己比赛积分
+	int32 ifmatch = 5;//是否已经报名 1 已经报名 2 比赛中
+	uint32 leftnum = 6;//比赛剩下人数
+	uint32 begintime = 7;//开始时间
+}
+//德州自定义房间信息
+message TexasSelfRoomInfo
+{
+	uint32 roomid = 1;//房间id 
+	bytes roomcode = 2;//房间码
+	uint32 endtime = 3;//结束时间
+	uint32 createuid = 4;//房主id
+	uint32 basecoin = 5;//底分
+	uint32 playcount = 6;//人数
+}
+
+

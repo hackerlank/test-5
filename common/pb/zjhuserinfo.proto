@@ -1,0 +1,98 @@
+syntax = "proto3";
+
+package zjhuserinfo;
+
+//用户基本信息
+message zjhUserinfo
+{
+	uint32 uid = 1;//用户id
+	bytes uname = 2; //用户名
+	uint32 coinnum = 3;//金币
+	uint32 integral = 4;//积分
+	uint32 ingotnum = 5;//元宝
+	uint32 gender = 6;//性别,0:未知,1:男;2:女;
+}
+
+//牌
+message Card
+{
+	uint32 value = 1;//牌的数值
+}
+
+//桌上用户基本信息
+message zjhDeskUserinfo
+{
+	uint32 uid = 1;//用户id
+	bytes uname = 2; //用户名
+	uint32 coinnum = 3;//金币 积分
+	bytes headurl = 4;//头像地址
+	uint32 deskid = 5;//桌子id
+	uint32 pos = 6;//座位位置0-9
+	uint32 status = 7;//状态 
+	uint32 offline = 8;//在线状态 1在线，2离线
+	uint32 ifauto = 9;//1:托管，0:不托管，
+	repeated Card poker = 10;//牌列表
+	uint32 gender = 11;//性别,0:未知,1:男;2:女;
+	int32 matchscore = 12; //比赛积分
+}
+
+//扎金花桌上基本信息
+message zjhDeskinfo
+{
+	uint32 deskid = 1;//桌子id
+	uint32 status = 2; //0\1\2:空闲
+	uint32 curpos = 3;//当前谁出牌
+	uint32 sumTotal = 4;//下注总和
+	uint32 singleBet = 5;//单注值
+	repeated zjhDeskUserinfo userlist = 6;//用户列表
+	uint32 roundCount = 7;//第几轮
+	uint32 matchid = 8;//比赛id
+}
+
+//扎金花结束信息
+message zjhDeskResultinfo
+{
+	uint32 point = 1;	//本局倍数
+	uint32 sumTotal =2;//下注总和
+	uint32 singleBet = 3;//单注值
+	repeated zjhUserResultinfo userlist = 4;
+	int32  winpos = 5;//赢的玩家
+}
+
+//扎金花用户结束信息
+message zjhUserResultinfo
+{
+	uint32 uid = 1;//用户id
+	uint32 pos = 2;//位置
+	repeated Card usercard = 3;//用户手牌
+	int32 gamevalue = 4;//比赛积分
+	uint32 rank = 5;//排名
+	int32 leftcount = 6; //剩余人数
+	uint32 leftvalue = 7;//剩余金额数值
+}
+
+ //炸金花当前比赛基本信息
+message zjhMatchInfo
+{
+	uint32 matchid = 1;//比赛id
+	uint32 trunindex = 2; //第几轮
+	uint32 curnum = 3;//当前报名人数
+	int32 gamevalue = 4;//自己比赛积分
+	int32 ifmatch = 5;//是否已经报名 1 已经报名 2 比赛中
+	uint32 leftnum = 6;//比赛剩下人数
+}
+
+
+//炸金花自定义房间信息
+message zjhSelfRoomInfo
+{
+	uint32 roomid = 1;//房间id 
+	bytes roomcode = 2;//房间码
+	uint32 endtime = 3;//结束时间
+	uint32 createuid = 4;//房主id
+	uint32 basecoin = 5;//底分
+	uint32 playcount = 6;//人数
+	int32	pos = 7;	//座位位置0-9
+}
+
+

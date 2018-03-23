@@ -1,0 +1,130 @@
+syntax = "proto3";
+
+package mahjong;
+//牌
+message Card
+{
+	uint32 value = 1;//牌的数值
+}
+//血战麻将桌上用户基本信息
+message MahjongDeskUserinfo
+{
+	uint32 uid = 1;//用户id
+	bytes uname = 2; //用户名
+	uint32 coinnum = 3;//金币 积分
+	bytes headurl = 4;//头像地址
+	uint32 deskid = 5;//桌子id
+	uint32 pos = 6;//座位位置0-9
+	uint32 status = 7;//状态0 坐着 1 已准备 2 正常玩 
+	uint32 offline = 8;//在线状态 1在线，2离线
+	repeated Card poker = 9;//手上牌列表
+	uint32 gender = 10;//性别,0:未知,1:男;2:女;
+	uint32 integral = 11;//游戏积分
+	int32 gamevalue = 12; //比赛积分
+	repeated MahjongUserOpCardInfo opcardinfo = 13;//碰，杠等信息
+	repeated Card putpoker = 14;//出的牌列表
+	uint32 lacktype = 15;//定缺类型
+	repeated Card hupoker = 16;//胡的牌列表
+}
+//血战麻将桌上基本信息
+message MahjongDeskinfo
+{
+	uint32 deskid = 1;//桌子id
+	uint32 status = 2; //见如下
+	uint32 curpos = 3;//当前谁操作
+	uint32 hostpos = 4;//庄的位置
+	repeated MahjongDeskUserinfo userlist = 5;//用户列表
+	uint32 matchid = 6;//比赛id
+	uint32 leftpnum= 7;//剩下的麻将牌数量
+}
+//用户碰，杠牌信息
+message MahjongUserOpCardInfo
+{
+	repeated Card poker = 1;//牌列表,碰，杠只有一个数值
+	uint32 type = 2; //类型，1 碰牌 2 明杠牌 3 暗杠牌4补杠牌5 吃牌
+	uint32 cardvalue= 3;// 杠牌的牌值
+	uint32 uid= 4;// 放杠的玩家id，0为自摸
+	int32 oppos= 5;// 杠的玩家位置
+	int32 putpos= 6;// 放杠的玩家位置 -1 为自摸
+	int32 changecoin=7;// 改变的钱
+}
+//血战麻将结束信息
+message MahjongDeskResultinfo
+{
+	repeated MahjongUserResultinfo userlist = 1;//用户列表
+}
+//血战麻将结束信息
+message MahjongUserResultinfo
+{
+	uint32 uid = 1;//用户id
+	uint32 pos = 2;//位置
+	uint32 result = 3;//1：赢；2：输
+	int32 value = 4;//输赢数值
+	int32 coin = 5;//输赢金豆 比赛用
+	repeated Card usercard = 6;//用户手牌
+	int32 gamevalue = 7;//比赛积分
+	uint32 rank = 8;//排名
+	int32 gangwincoin=9;//刮风下雨输赢数值
+	repeated MahjongUserOpCardInfo opcardinfo = 10;//碰，杠等信息
+	repeated HuCardInfo hulist=11;//胡牌，被胡信息
+	repeated ResultPreInfo prelist=12;//结算前统计信息
+}
+//胡牌的信息
+message HuCardInfo
+{
+	uint32 type= 1;// 胡牌类型
+	uint32 cardvalue= 2;// 胡牌的牌值
+	uint32 uid= 3;// 放炮的玩家id，0为自摸
+	int32 oppos= 4;// 胡的玩家位置
+	int32 putpos= 5;// 放炮的玩家位置 -1 为自摸
+	int32 changecoin=6;// 改变的钱
+	uint32 gangnum=7;//杠的数量
+	uint32 othertype=8;//额外类型 1 普通胡 11自摸胡牌 12杠上花 13 杠上炮
+}
+//结算前统计的信息
+message ResultPreInfo
+{
+	uint32 type= 1;// 结果类型 8 花猪 9 未听牌 100 刮风下雨退税 
+	int32 oppos= 2;// 赢的玩家位置
+	int32 putpos= 3;// 输的玩家位置
+	int32 changecoin=4;// 改变的钱
+}
+//血战麻将经济数值改变信息
+message MahjongCoinChangeinfo
+{
+	repeated MahjongUserCoinChinfo userlist = 1;//用户列表
+}
+//血战麻将用户经济数值改变信息
+message MahjongUserCoinChinfo
+{
+	uint32 uid = 1;//用户id
+	uint32 pos = 2;//位置
+	uint32 result = 3;//1：赢；2：输
+	int32 value = 4;//输赢数值
+	uint32 type = 5;//操作类型 1 胡 11 自摸胡 2 明杠 21 暗杠 8 花猪 9 未听牌
+}
+//血流麻将当前比赛基本信息
+message MahjongMatchInfo
+{
+	uint32 matchid = 1;//比赛id
+	uint32 trunindex = 2; //第几轮
+	uint32 curnum = 3;//当前报名人数
+	int32 gamevalue = 4;//自己比赛积分
+	int32 ifmatch = 5;//是否已经报名 1 已经报名 2 比赛中
+	uint32 leftnum = 6;//比赛剩下人数
+	uint32 begintime = 7;//开始时间
+}
+//血流麻将自定义房间信息
+message MahjongSelfRoomInfo
+{
+	uint32 roomid = 1;//房间id 
+	bytes roomcode = 2;//房间码
+	uint32 endtime = 3;//结束时间
+	uint32 createuid = 4;//房主id
+	uint32 basecoin = 5;//底分
+	uint32 playcount = 6;//人数
+}
+
+
+
+
